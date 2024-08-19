@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatAIForAll</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="app-title">ChatAIForAll</h1>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch">
+                <label for="theme-switch">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </label>
+            </div>
+            <div class="mode-toggle">
+                <input type="checkbox" id="mode-switch">
+                <label for="mode-switch">
+                    <i class="fas fa-comment"></i>
+                    <i class="fas fa-image"></i>
+                </label>
+            </div>
+            <button id="options-btn"><i class="fas fa-cog"></i></button>
+        </header>
+        <main>
+            <div id="chat-container"></div>
+            <div id="image-container" style="display: none;">
+                <textarea id="image-prompt" placeholder="Describe the image you want to create..." rows="3" maxlength="4000"></textarea>
+                <button id="generate-image-btn">Generate Image</button>
+                <div id="generated-image"></div>
+            </div>
+        </main>
+        <footer>
+            <form id="prompt-form">
+                <textarea id="prompt-input" placeholder="Type your message..." rows="3"></textarea>
+                <button type="submit"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </footer>
+    </div>
+    <div id="options-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="settings-title">Settings</h2>
+            <label for="api-key" id="api-key-label">OpenAI API Key:</label>
+            <input type="password" id="api-key" placeholder="Enter your API key">
+            
+            <label for="system-role" id="system-role-label">System Role:</label>
+            <input type="text" id="system-role" value="You are an assistant." placeholder="You are an assistant.">
+            
+            <label for="max-tokens" id="max-tokens-label">Max Tokens:</label>
+            <input type="number" id="max-tokens" value="100" min="1" max="2048">
+            
+            <label for="temperature" id="temperature-label">Temperature:</label>
+            <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+            <span id="temperature-value">0.7</span>
+            
+            <label for="top-p" id="top-p-label">Top P:</label>
+            <input type="range" id="top-p" min="0" max="1" step="0.1" value="1">
+            <span id="top-p-value">1</span>
+            
+            <label for="frequency-penalty" id="frequency-penalty-label">Frequency Penalty:</label>
+            <input type="range" id="frequency-penalty" min="0" max="2" step="0.1" value="0.5">
+            <span id="frequency-penalty-value">0.5</span>
+            
+            <label for="presence-penalty" id="presence-penalty-label">Presence Penalty:</label>
+            <input type="range" id="presence-penalty" min="0" max="2" step="0.1" value="0.6">
+            <span id="presence-penalty-value">0.6</span>
+            
+            <div id="image-options" class="hidden">
+                <label for="image-size" id="image-size-label">Image Size:</label>
+                <select id="image-size">
+                    <option value="1024x1024" selected>1024x1024</option>
+                    <option value="1792x1024">1792x1024</option>
+                    <option value="1024x1792">1024x1792</option>
+                </select>
+            </div>
+
+            <div id="text-options" class="hidden">
+                <label for="text-model" id="text-model-label">AI Model:</label>
+                <select id="text-model">
+                    <option value="gpt-4o" selected>GPT-4o</option>
+                    <option value="gpt-4o-mini">GPT-4o-mini</option>
+                    <option value="gpt-4-turbo">GPT-4-turbo</option>
+                    <option value="gpt-3.5-turbo-0125">GPT-3.5-turbo-0125</option>
+                </select>
+            </div>
+
+            <label for="language-select" id="language-label">Language:</label>
+            <select id="language-select">
+                <option value="en" selected>English</option>
+                <option value="pt">Português</option>
+                <option value="es">Español</option>
+            </select>
+            
+            <button id="save-config">Save</button>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+    <div id="loading-modal" class="loading-modal hidden">
+        <div class="loading-spinner">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

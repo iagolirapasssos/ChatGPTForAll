@@ -1,0 +1,484 @@
+/*styles.css*/
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #4a90e2;
+    --secondary-color: #f0f0f0;
+    --accent-color: #ff6b6b;
+}
+
+body.dark-theme {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --primary-color: #61dafb;
+    --secondary-color: #2c2c2c;
+    --accent-color: #ff8c8c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 100%; /* Changed from 800px to 100% for full width on all screens */
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    flex-wrap: wrap; /* Added to allow wrapping on smaller screens */
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+/* Added media query for smaller screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+}
+
+#theme-switch {
+    display: none;
+}
+
+.theme-toggle label {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    transition: opacity 0.3s;
+}
+
+.theme-toggle .fa-sun {
+    color: #f39c12;
+}
+
+.theme-toggle .fa-moon {
+    color: #34495e;
+}
+
+#theme-switch:checked + label .fa-sun {
+    opacity: 0;
+}
+
+#theme-switch:not(:checked) + label .fa-moon {
+    opacity: 0;
+}
+
+#options-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+main {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    line-height: 1.4;
+    word-wrap: break-word; /* Added to ensure long words don't overflow */
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Estilo para o modal de carregamento */
+.loading-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-spinner {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    color: white;
+}
+
+/* Classe para esconder o modal */
+.hidden {
+    display: none;
+}
+
+/* Ajustes na formatação Markdown */
+.ai-message h1, .ai-message h2, .ai-message h3, .ai-message h4, .ai-message h5, .ai-message h6 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: var(--primary-color);
+}
+
+.ai-message p {
+    margin-bottom: 10px;
+}
+
+.ai-message ul, .ai-message ol {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.ai-message pre {
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    padding: 10px;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.ai-message code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.ai-message pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.ai-message blockquote {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 10px;
+    margin-left: 0;
+    color: var(--text-color);
+    font-style: italic;
+}
+
+
+footer {
+    padding-top: 20px;
+}
+
+#prompt-form {
+    display: flex;
+    gap: 10px;
+}
+
+#prompt-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    resize: both; /* Permite redimensionamento tanto na largura quanto na altura */
+    overflow: auto; /* Adiciona rolagem se o conteúdo exceder */
+    min-height: 50px; /* Altura mínima para garantir uma aparência consistente */
+    max-height: 300px; /* Altura máxima para evitar que o textarea cresça demais */
+}
+
+#prompt-form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#prompt-form button:hover {
+    background-color: var(--accent-color);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: var(--bg-color);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 80vh; /* Limita a altura máxima do modal */
+    overflow-y: auto; /* Adiciona scroll vertical quando necessário */
+}
+
+/* Added media query for smaller screens */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-content input[type="number"],
+.modal-content input[type="range"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.modal-content input[type="range"] {
+    margin-bottom: 0;
+}
+
+.modal-content span {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#save-api-key {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#close-modal {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.modal-content button:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Added media queries for better responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .theme-toggle, #options-btn {
+        margin-top: 10px;
+    }
+
+    .message {
+        max-width: 100%;
+    }
+}
+
+.message-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.message-buttons button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.message-buttons button:hover {
+    color: var(--accent-color);
+}
+
+.message-buttons i {
+    font-size: 1rem;
+}
+
+.mode-toggle {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+#mode-switch {
+    display: none;
+}
+
+.mode-toggle label {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.mode-toggle i {
+    font-size: 1.2rem;
+    transition: opacity 0.3s;
+}
+
+.mode-toggle .fa-comment {
+    color: var(--primary-color);
+}
+
+.mode-toggle .fa-image {
+    color: var(--accent-color);
+}
+
+#mode-switch:checked + label .fa-comment {
+    opacity: 0;
+}
+
+#mode-switch:not(:checked) + label .fa-image {
+    opacity: 0;
+}
+
+#image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#image-prompt {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    resize: vertical;
+}
+
+#generate-image-btn {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#generate-image-btn:hover {
+    background-color: var(--accent-color);
+}
+
+#generated-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+/* Estilo para os dropdowns */
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para imagens */
+.message img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+}
